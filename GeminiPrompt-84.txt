@@ -6,7 +6,7 @@ Focus 100% of your compute on the single match provided. Identify if the market 
 </core_directive>
 
 <execution_constraints>
-1. Strict ID Extraction: Extract the exact integer explicitly inside the parentheses next to the chosen selection (ID: XXXXX). Do modify or extract the Market ID. For Over/Under, this ID is almost always 47972 or 47973.
+1. Strict ID Extraction: Extract the exact integer explicitly inside the parentheses next to the chosen selection (ID: XXXXX). Do NOT modify or extract the Market ID (e.g., 1.254...). For Over/Under, this ID is almost always 47972 or 47973.
 2. Liquidity Check: If Price is "No Liquidity", set "playable": false and state "Insufficient market depth".
 3. NO CODE EXECUTION: Perform all EV and Kelly Criterion math natively within your standard inference context. Do not write or execute Python.
 4. No Narrative Padding: Output ONLY the required JSON. No introductory filler, markdown tables, or external explanations.
@@ -45,8 +45,9 @@ Focus 100% of your compute on the single match provided. Identify if the market 
    - Tier 1 (-0.010): IDs 13, 61, 141, 7129730.
    - Tier 2 (-0.020): IDs 11, 35, 67387, 5627174, 12117172, 12204313, 12395639, 12782082.
    - Tier 3 (-0.035): IDs 19, 37, 197.
-3. Percentage Conversion: Multiply the final decimal EV by 100 to convert to a whole percentage (e.g., 0.078 becomes 7.8) for the JSON output.
-4. MinOdds Floor: Calculate absolute minimum decimal odds for a +3.5% (0.035) EV:
+3. EV Application: Apply the dynamic safety penalty to the Raw EV to calculate the final Model EV.
+4. Percentage Conversion: Multiply the final decimal EV by 100 to convert to a whole percentage (e.g., 0.078 becomes 7.8) for the JSON output fields ("rawEV" and "modelEV").
+5. MinOdds Floor: Calculate absolute minimum decimal odds for a +3.5% (0.035) Model EV:
    - Half-Lines/OU: MinOdds = (0.035 + 1) / P_Win
    - Integer Lines: MinOdds = ((0.035 + P_Loss) / P_Win) + 1
    - Quarter Lines: MinOdds = ((0.035 + (0.5 * P_Half_Loss) + P_Full_Loss) / (P_Full_Win + (0.5 * P_Half_Win))) + 1
@@ -65,7 +66,13 @@ Focus 100% of your compute on the single match provided. Identify if the market 
 </staking_and_filters>
 
 <critical_output_rule>
-Extract the PROMPT_VERSION string from the top of this document into the 'promptVersion' field. Output ONLY valid, raw JSON. Do NOT wrap in Markdown blocks or use backticks. Use this exact schema:
+Extract the PROMPT_VERSION string from the top of this document into the 'promptVersion' field. 
+CRITICAL: Output absolutely nothing except the JSON object.
+Do NOT wrap in Markdown blocks or use backticks. Use this exact schema:
 
-{"promptVersion": "v7", "searchQuery": "site:fbref.com Team Name expected goals", "dataStrategy": "URL: https://fbref.com/...", "rawStatsExtracted": "Home xG: X, Away xG: Y", "mathScratchpad": "Step 1: P(Win)...", "playable": true, "division": "League Name", "match": "Home vs Away", "market": "ASIAN_HANDICAP", "selectionId": 123456, "selection": "Team Name", "side": "Home", "handicap": -0.5, "price": 2.04, "minOdds": 1.72, "trueProb": 52.5, "rawEV": 7.8, "modelEV": 6.8, "stake": 2.15, "reason": "Brief logic."}
+{"promptVersion": "v8", "searchQuery": "site:fbref.com Team Name expected goals", "dataStrategy": "URL: https://fbref.com/...", "rawStatsExtracted": "Home xG: X, Away xG: Y", "mathScratchpad": "Step 1: P(Win)...", "playable": true, "division": "League Name", "match": "Home vs Away", "market": "ASIAN_HANDICAP", "selectionId": 123456, "selection": "Team Name", "side": "Home", "handicap": -0.5, "price": 2.04, "minOdds": 1.72, "trueProb": 52.5, "rawEV": 7.8, "modelEV": 6.8, "stake": 2.15, "reason": "Brief logic."}
 </critical_output_rule>
+
+<match_data>
+{{INPUT}}
+</match_data>
