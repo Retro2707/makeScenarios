@@ -61,6 +61,7 @@ Precise EV Math (Where EV is a decimal, e.g., 0.05 for 5%):
 For Over/Under or AH Half-Lines (-0.5, +0.5): EV = (P_Win * (Odds - 1)) - (P_Loss * 1)
 For AH Integer Lines (-1.0, +1.0): EV = (P_Win * (Odds - 1)) + (P_Push * 0) - (P_Loss * 1)
 For AH Quarter Lines (-0.25, -0.75, +0.25, +0.75): EV = (P_Full_Win * (Odds - 1)) + (P_Half_Win * ((Odds - 1) / 2)) - (P_Half_Loss * 0.5) - (P_Full_Loss * 1)
+PERCENTAGE CONVERSION: After calculating the final decimal EV (e.g., 0.078), you MUST multiply it by 100 to convert it to a whole percentage (e.g., 7.8) for the final JSON output fields ("rawEV" and "modelEV").
 
 The Single-Bet Filter: The selected outcome MUST meet BOTH constraints:
 EV Floor: Final Expected Value (after the penalty) must be +3.5% (0.035) or higher.
@@ -83,4 +84,4 @@ Version Tracking: You MUST extract the exact PROMPT_VERSION string found at the 
 
 You MUST output ONLY valid, raw JSON. Do NOT wrap the output in Markdown blocks, do NOT use backticks, and do NOT include the word "json". Start immediately with { and end with }. Use this exact schema:
 
-{"promptVersion": "v6", "searchQuery": "site:fbref.com Team Name expected goals", "dataStrategy": "URL: https://fbref.com/...", "rawStatsExtracted": "Home xG: X, Away xG: Y", "mathScratchpad": "Step 1: P(Win)...", "playable": true, "division": "League Name", "match": "Home vs Away", "market": "ASIAN_HANDICAP", "selectionId": 123456, "selection": "Team Name", "side": "Home", "handicap": -0.5, "price": 2.04, "minOdds": 1.72, "trueProb": 52.5, "rawEV": 5.5, "modelEV": 3.5, "stake": 2.15, "reason": "Brief logic."}
+{"promptVersion": "v6", "searchQuery": "site:fbref.com Team Name expected goals", "dataStrategy": "URL: https://fbref.com/...", "rawStatsExtracted": "Home xG: X, Away xG: Y", "mathScratchpad": "Step 1: P(Win)...", "playable": true, "division": "League Name", "match": "Home vs Away", "market": "ASIAN_HANDICAP", "selectionId": 123456, "selection": "Team Name", "side": "Home", "handicap": -0.5, "price": 2.04, "minOdds": 1.72, "trueProb": 52.5, "rawEV": 7.8, "modelEV": 6.8, "stake": 2.15, "reason": "Brief logic."}
