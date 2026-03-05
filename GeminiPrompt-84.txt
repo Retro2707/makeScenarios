@@ -1,4 +1,4 @@
-PROMPT_VERSION: v5
+PROMPT_VERSION: v6
 -----------------------------------------
 
 Core Task & Interaction Rule (CRITICAL)
@@ -40,10 +40,14 @@ Conversion Check: Search for "Goals minus xG" (G-xG). If a team is underperformi
 
 Qualitative Context: ONLY search for weather disruptions, starting XI absences, and squad rotation if the league is English Sky Bet Championship or German Bundesliga 2. For all other leagues, rely 100% on the quantitative model.
 
-Fatigue & Travel Modifier: Apply a 15% reduction to the affected team's raw xG or proxy output BEFORE calculating probabilities if:
-- Liga MX (ID: 5627174): The HOME team is Toluca, Club America, Cruz Azul, UNAM Pumas, or Pachuca (reduce Away team xG).
-- US MLS (ID: 141): The away team is traveling across more than two time zones.
-- Global: ANY team is playing their third match in 7 days.
+Regional, Seasonal & Fatigue Modifiers: Apply these specific adjustments to the raw xG or proxy output BEFORE calculating final probabilities:
+- US MLS (ID: 141): If the HOME team is Colorado Rapids or Real Salt Lake, OR the away team is traveling across more than two time zones, apply a 15% reduction to the away team's xG.
+- Liga MX (ID: 5627174): If the HOME team is Toluca, Club America, Cruz Azul, UNAM Pumas, or Pachuca, apply a 15% reduction to the away team's xG.
+- Dutch Eerste (ID: 11): If the home team utilizes an artificial pitch, apply a 10% boost to the home team's xG.
+- South America (IDs: 13, 67387): Apply an automatic 10% reduction to total match xG before calculating Over/Under probabilities.
+- Asia Summer (IDs: 197, 12782082, 12395639): If the match is played in July or August, apply a 15% reduction to total match xG.
+- English Lower Winter (IDs: 35, 37): If the match is played between December and February, strictly calculate xG or the Fallback Proxy using ONLY the last 5 matches, ignoring full-season data.
+- Global Fatigue: If ANY team is playing their third match in 7 days, apply a 15% reduction to their raw xG.
 
 Defensive Rigidity: Factor in the "Clean Sheet Probability" and recent xGA trends to determine the likelihood of a low-scoring (Under 2.5) outcome.
 
@@ -79,4 +83,4 @@ Version Tracking: You MUST extract the exact PROMPT_VERSION string found at the 
 
 You MUST output ONLY valid, raw JSON. Do NOT wrap the output in Markdown blocks, do NOT use backticks, and do NOT include the word "json". Start immediately with { and end with }. Use this exact schema:
 
-{"promptVersion": "v5", "searchQuery": "site:fbref.com Team Name expected goals", "dataStrategy": "URL: https://fbref.com/...", "rawStatsExtracted": "Home xG: X, Away xG: Y", "mathScratchpad": "Step 1: P(Win)...", "playable": true, "division": "League Name", "match": "Home vs Away", "market": "ASIAN_HANDICAP", "selectionId": 123456, "selection": "Team Name", "side": "Home", "handicap": -0.5, "price": 2.04, "minOdds": 1.72, "trueProb": 52.5, "rawEV": 5.5, "modelEV": 3.5, "stake": 2.15, "reason": "Brief logic."}
+{"promptVersion": "v6", "searchQuery": "site:fbref.com Team Name expected goals", "dataStrategy": "URL: https://fbref.com/...", "rawStatsExtracted": "Home xG: X, Away xG: Y", "mathScratchpad": "Step 1: P(Win)...", "playable": true, "division": "League Name", "match": "Home vs Away", "market": "ASIAN_HANDICAP", "selectionId": 123456, "selection": "Team Name", "side": "Home", "handicap": -0.5, "price": 2.04, "minOdds": 1.72, "trueProb": 52.5, "rawEV": 5.5, "modelEV": 3.5, "stake": 2.15, "reason": "Brief logic."}
