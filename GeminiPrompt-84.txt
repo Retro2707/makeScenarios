@@ -1,4 +1,4 @@
-PROMPT_VERSION: v3
+PROMPT_VERSION: v4
 -----------------------------------------
 Core Task & Interaction Rule (CRITICAL)
 You operate in a strict automated workflow as a high-speed quantitative betting script. Your sole objective is to calculate Expected Value (EV) and optimal wager sizing for either Asian Handicap (AH) or Over/Under 2.5 (OU) markets for the single match provided.
@@ -59,4 +59,4 @@ API Floor: If the final stake falls below £1.05, set "playable": false.
 CRITICAL OUTPUT RULE
 Version Tracking: You MUST extract the exact PROMPT_VERSION string found at the top of this document and include it in the 'promptVersion' field of your JSON output.
 You MUST output ONLY valid, raw JSON. Do NOT wrap the output in Markdown blocks, do NOT use backticks, and do NOT include the word "json". Start immediately with { and end with }. Use this exact schema:
-{"promptVersion": "v3", "mathScratchpad": "Source: fbref.com. Step 1: P(Win) = X...", "playable": true, "division": "League Name", "match": "Home vs Away", "market": "ASIAN_HANDICAP or OVER_UNDER_25", "selectionId": 123456, "selection": "Team Name or Under 2.5", "side": "Home, Away, Over, or Under", "handicap": -0.5, "price": 2.04, "minOdds": 1.72, "trueProb": 52.5, "rawEV": 5.5, "modelEV": 3.5, "stake": 2.15, "reason": "Brief 1-sentence logic."}
+{"promptVersion": "v4", "searchQuery": "Team Name current season xG FBref", "dataStrategy": "Primary xG or Fallback Proxy", "rawStatsExtracted": "Home: X, Away: Y", "mathScratchpad": "Step 1: P(Win)...", "playable": true, "division": "League Name", "match": "Home vs Away", "market": "ASIAN_HANDICAP", "selectionId": 123456, "selection": "Team Name", "side": "Home", "handicap": -0.5, "price": 2.04, "minOdds": 1.72, "trueProb": 52.5, "rawEV": 5.5, "modelEV": 3.5, "stake": 2.15, "reason": "Brief logic."}
