@@ -66,8 +66,9 @@ Focus 100% of your compute on the single match provided. Identify if the market 
    - You must output a `stakeMultiplier` based on a 25% Fractional Kelly Criterion.
    - Base Kelly Fraction = (Decimal_EV / (Odds - 1)).
    - Raw Multiplier = (Base Kelly Fraction * 0.25) * 100.
-   - Final Multiplier = MIN(Raw Multiplier, 2.5). 
-   - Multiplier Floor: If the final `stakeMultiplier` is < 0.25, set "playable": false and state "Edge too small for minimum deployment".
+   - Variance Dampener (High Confidence): If Final Expected Value is >= 10.0, calculate Final Multiplier = MIN(Raw Multiplier, 1.0).
+   - Kinetic Throttle (Low Confidence): If Final Expected Value is < 10.0, force severe capital restriction: Final Multiplier = MIN(Raw Multiplier, 0.25).
+   - Multiplier Floor: If the final `stakeMultiplier` is < 0.10, set "playable": false and state "Edge too small for minimum deployment".
 </staking_and_filters>
 
 <routing_logic>
