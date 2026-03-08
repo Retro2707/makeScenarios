@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'prompt.txt' 
+      - 'GeminiPrompt-84.txt' 
 
 jobs:
   send-to-make:
