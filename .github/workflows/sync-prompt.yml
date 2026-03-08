@@ -1,0 +1,24 @@
+name: Sync Prompt to Make.com
+
+# Only trigger when the prompt file on the main branch is updated
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'prompt.txt' 
+
+jobs:
+  send-to-make:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Package and Send
+        run: |
+          # Safely package the multiline prompt text into clean JSON
+          jq -Rs '{prompt: .}' prompt.txt > payload.json
+          
+          # Fire it directly to Make.com
+          curl -X POST -H "Content-Type: application/json" -d @payload.json https://hook.eu1.make.com/5sf9o8r79fomfknkt11b2qbciq2fdp6f
